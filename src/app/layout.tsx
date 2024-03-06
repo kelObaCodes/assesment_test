@@ -28,6 +28,14 @@ export default function RootLayout({
                     href="https://fonts.googleapis.com/css2?family=Inconsolata:wght@200..900&family=Inria+Sans:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&family=Noto+Color+Emoji&family=Source+Code+Pro:ital,wght@0,200..900;1,200..900&display=swap"
                     rel="stylesheet"
                 />
+                  <link
+                    rel="stylesheet"
+                    href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200"
+                />
+                <link
+                    rel="stylesheet"
+                    href="https://fonts.googleapis.com/css2?family=Material+Symbols+Sharp:opsz,wght,FILL,GRAD@24,400,0,0"
+                />
             </head>
 
             <body className={inter.className}>{children}</body>
