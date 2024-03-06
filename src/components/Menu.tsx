@@ -32,7 +32,7 @@ const Logo = styled.div`
 const MenuItems = styled.ul`
     list-style: none;
     display: flex;
-    justify-content: center;
+    justify-content: space-around;
     align-items: center;
     margin: 0;
     padding: 0;

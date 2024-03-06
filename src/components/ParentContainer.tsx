@@ -3,7 +3,7 @@
 import React from "react";
 import styled from "styled-components";
 import Menu from "./Menu";
-
+import Hero from "./HeroContainer"
 
 const Container = styled.div`
     background-color: #fff;
@@ -20,6 +20,7 @@ const Container = styled.div`
 const ParentContainer: React.FC = () => {
     return <Container>
 <Menu/>
+<Hero/>
 
     </Container>;
 };

@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { Inter, Inria_Sans } from "next/font/google";
 import "./globals.css";
 
 const inter = Inter({ subsets: ["latin"] });
@@ -38,7 +38,7 @@ export default function RootLayout({
                 />
             </head>
 
-            <body className={inter.className}>{children}</body>
+            <body className="inria-sans-regular ">{children}</body>
         </html>
     );
 }
