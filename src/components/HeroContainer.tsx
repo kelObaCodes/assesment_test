@@ -38,10 +38,43 @@ const Hero: React.FC = () => {
   return (
     <Container>
    <VerticalDiv leftPosition="30%">
+   <Circle
+        icon={<span className="material-symbols-outlined">
+        bolt
+        </span>}
+        color="#F2F2F2"
+        height="70px"
+        width="70px"
+        leftPosition='-152px'
+        topPosition='5px'
+        iconColor={'#FE4A22'}
+      />
+   <Circle
+        icon={<span className="material-symbols-outlined">
+        timeline
+        </span>}
+        color="#FE4A22"
+        height="70px"
+        width="70px"
+        leftPosition='-102px'
+        topPosition='5px'
+        iconColor={'#fff'}
+      />
         <Paragraph>Analytics</Paragraph>
+
         <ImageContainer>
         <Image src={Laptop} alt='Laptop' width={250}/>
-
+        <Circle
+        icon={<span className="material-symbols-outlined">
+        play_arrow
+        </span>}
+        color="#FE4A22"
+        height="40px"
+        width="40px"
+        rightPosition='600px'
+        topPosition='-124px'
+        iconColor={'#fff'}
+      />
 
         </ImageContainer>
       </VerticalDiv>
