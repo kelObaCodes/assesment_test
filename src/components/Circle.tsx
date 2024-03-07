@@ -6,19 +6,19 @@ interface CircleProps {
   color: string;
   height: string;
   width: string;
-  leftPosition?: string;
-  topPosition?: string;
-  rightPosition?: string;
-  iconColor?: string;
+  left?: string;
+  top?: string;
+  right?: string;
+  iconcolor?: string;
 }
 
 const CircleContainer = styled.div<{
   color: string;
   height: string;
   width: string;
-  leftPosition?: string;
-  topPosition?: string;
-  rightPosition?: string;
+  left?: string;
+  top?: string;
+  right?: string;
 }>`
   position: absolute;
   display: flex;
@@ -28,13 +28,13 @@ const CircleContainer = styled.div<{
   height: ${(props) => props.height};
   width: ${(props) => props.width};
   border-radius: 50%;
-  left: ${(props) => props.leftPosition};
-  top: ${(props) => props.topPosition};
-  right: ${(props) => props.rightPosition};
+  left: ${(props) => props.left};
+  top: ${(props) => props.top};
+  right: ${(props) => props.right};
 `;
 
-const Icon = styled.div<{ iconColor?: string }>`
-  color: ${(props) => props.iconColor || 'inherit'};
+const Icon = styled.div<{ iconcolor?: string }>`
+  color: ${(props) => props.iconcolor || 'inherit'};
 `;
 
 const Circle: React.FC<CircleProps> = ({
@@ -42,21 +42,21 @@ const Circle: React.FC<CircleProps> = ({
   color,
   height,
   width,
-  leftPosition,
-  topPosition,
-  rightPosition,
-  iconColor
+  left,
+  top,
+  right,
+  iconcolor
 }) => {
   return (
     <CircleContainer
       color={color}
       height={height}
       width={width}
-      leftPosition={leftPosition}
-      topPosition={topPosition}
-      rightPosition={rightPosition}
+      left={left}
+      top={top}
+      right={right}
     >
-      <Icon iconColor={iconColor}>{icon}</Icon>
+      <Icon iconcolor={iconcolor}>{icon}</Icon>
     </CircleContainer>
   );
 };

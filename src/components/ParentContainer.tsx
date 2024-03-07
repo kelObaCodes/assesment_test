@@ -4,12 +4,11 @@ import React from "react";
 import styled from "styled-components";
 import Menu from "./Menu";
 import Hero from "./HeroContainer"
-
+import Analytics from './Analytics'
 const Container = styled.div`
     background-color: #fff;
     max-width: 1024px;
     margin: 0 auto;
-    height: 100vh;
     justify-content: center;
     border-radius: 15px;
     width: 100%;
@@ -21,7 +20,7 @@ const ParentContainer: React.FC = () => {
     return <Container>
 <Menu/>
 <Hero/>
-
+<Analytics/>
     </Container>;
 };
 
