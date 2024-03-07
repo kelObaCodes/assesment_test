@@ -5,6 +5,9 @@ import styled from "styled-components";
 import Menu from "./Menu";
 import Hero from "./HeroContainer"
 import Analytics from './Analytics'
+import Footer from './Footer'
+
+
 const Container = styled.div`
     background-color: #fff;
     max-width: 1024px;
@@ -21,7 +24,9 @@ const ParentContainer: React.FC = () => {
 <Menu/>
 <Hero/>
 <Analytics/>
+<Footer/>
     </Container>;
+    
 };
 
 export default ParentContainer;
