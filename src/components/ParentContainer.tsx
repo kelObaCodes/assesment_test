@@ -3,11 +3,12 @@
 import React from "react";
 import styled from "styled-components";
 import Menu from "./Menu";
-import Hero from "./HeroContainer"
-import Analytics from './Analytics'
-import Footer from './Footer'
-import Data from './Data'
-import Efficiency from './Efficiency'
+import Hero from "./HeroContainer";
+import Analytics from "./Analytics";
+import Footer from "./Footer";
+import Data from "./Data";
+import Efficiency from "./Efficiency";
+import Actions from "./Actions";
 
 const Container = styled.div`
     background-color: #fff;
@@ -21,15 +22,17 @@ const Container = styled.div`
 `;
 
 const ParentContainer: React.FC = () => {
-    return <Container>
-<Menu/>
-<Hero/>
-<Analytics/>
-<Efficiency/>
-<Data/>
-<Footer/>
-    </Container>;
-    
+    return (
+        <Container>
+            <Menu />
+            <Hero />
+            <Analytics />
+            <Efficiency />
+            <Actions />
+            <Data />
+            <Footer />
+        </Container>
+    );
 };
 
 export default ParentContainer;

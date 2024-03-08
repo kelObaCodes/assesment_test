@@ -5,6 +5,7 @@ import Graph from "../../public/images/graph.png";
 import DP from "../../public/images/dp_1.png";
 import DP2 from "../../public/images/dp_2.png";
 import background from "../../public/images/background.png";
+
 const Container = styled.div`
     display: flex;
     flex-direction: column;
@@ -35,6 +36,7 @@ const FirstSectionColumn = styled.div`
     border-radius: 15px;
     border: 1px solid #ededed;
     background-image: url(${background.src});
+    background-position-x: -19px;
     background-repeat: repeat;
     padding-top: 40px;
     position: relative;
@@ -256,12 +258,12 @@ const SeparatorCover = styled.div`
     width: 100%;
     gap: 2px;
 `;
-const Separator = styled.div<{bgColor?: string}>`
+const Separator = styled.div<{bgcolor?: string}>`
     display: flex;
     width: 35%;
     border-radius: 10px;
     height: 4px;
-    background: ${(props) => props.bgColor};;
+    background: ${(props) => props.bgcolor};;
 `;
 const UserSales = styled.div`
     display: flex;
@@ -356,9 +358,9 @@ const Data: React.FC = () => {
                                 <h3>Sales revenue</h3>
                                 <h2>$131.2K</h2>
                                 <SeparatorCover>
-                                    <Separator bgColor="#4AC785"></Separator>
-                                    <Separator bgColor="#FFCE1F"></Separator>
-                                    <Separator bgColor="#4AC785"></Separator>
+                                    <Separator bgcolor="#4AC785"></Separator>
+                                    <Separator bgcolor="#FFCE1F"></Separator>
+                                    <Separator bgcolor="#4AC785"></Separator>
                                 </SeparatorCover>
                                 <UserSales>
                                 <Image
@@ -458,7 +460,7 @@ const Data: React.FC = () => {
             </FirstSection>
             {/* <hr style={{ width: '100%' }} /> */}
             <SecondSection>
-                <Button>
+                <Button className="animate-fly-in">
                     <span className="material-symbols-outlined">link</span>
                 </Button>
                 <BigText>Get Started</BigText>
@@ -470,7 +472,7 @@ const Data: React.FC = () => {
                 </DescriptionText>
                 <CenteredButtons>
                     <CenteredButton1>Request a demo</CenteredButton1>
-                    <CenteredButton2>Start for free </CenteredButton2>
+                    <CenteredButton2 className="expandable">Start for free </CenteredButton2>
                 </CenteredButtons>
             </SecondSection>
         </Container>

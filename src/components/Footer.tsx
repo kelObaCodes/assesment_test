@@ -4,6 +4,7 @@ import Image from "next/image";
 
 import BarCode from "../../public/images/bar_code.png";
 
+
 const FooterContainer = styled.div`
     background-color: #0d0d0d;
     color: #fff;
@@ -64,7 +65,8 @@ const StyledHorizontalMenuItem = styled.div`
 `;
 const StyledBarCodeColumn = styled(Column)`
     position: relative;
-    text-align: end;
+ text-align: end;
+ 
 `;
 const StyledRowColumn = styled(Row)`
     position: relative;
@@ -155,7 +157,7 @@ const Footer: React.FC = () => {
                     </StyledHorizontalBottomMenu>
                 </Column>
                 <StyledBarCodeColumn>
-                    <Image src={BarCode} alt="Bar code" width={100} />
+                    <Image src={BarCode} alt="Bar code" width={100} className="expandable"/>
                 </StyledBarCodeColumn>
             </StyledRowColumn>
         </FooterContainer>
