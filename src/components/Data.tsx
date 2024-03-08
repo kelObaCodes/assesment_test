@@ -2,6 +2,8 @@ import React from "react";
 import styled from "styled-components";
 import Image from "next/image";
 import Graph from "../../public/images/graph.png";
+import DP from "../../public/images/dp_1.png";
+import DP2 from "../../public/images/dp_2.png";
 import background from "../../public/images/background.png";
 const Container = styled.div`
     display: flex;
@@ -32,16 +34,26 @@ const FirstSectionColumn = styled.div`
     margin: 5px;
     border-radius: 15px;
     border: 1px solid #ededed;
-    background-image:  url(${background.src});
+    background-image: url(${background.src});
     background-repeat: repeat;
     padding-top: 40px;
-
+    position: relative;
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 6px -1px, rgba(0, 0, 0, 0.06) 0px 2px 4px -1px;
 `;
 
 const LightGreyColumn = styled.div`
     padding: 10px;
     margin: 5px;
     position: relative;
+    margin-bottom: 18px;
+`;
+const StyledLightGreyColumn = styled(LightGreyColumn)`
+    padding: 10px;
+    margin: 5px;
+    position: relative;
+    margin-top: -65px;
+    margin-bottom: 40px;
+   
 `;
 
 const RowText = styled.div``;
@@ -50,7 +62,7 @@ const Title = styled.h2`
     text-align: center;
     font-weight: 300;
     font-size: 18px;
-    margin: 20px 0;
+    margin-bottom: 20px;
 `;
 
 const Description = styled.p`
@@ -130,6 +142,7 @@ const GreySpan = styled.span`
     color: #cccccc;
     margin: 0 10px;
 `;
+
 const Insights = styled.div`
     width: 300px;
     height: 180px;
@@ -143,21 +156,22 @@ const Insights = styled.div`
     margin-top: 40px;
     position: relative;
     z-index: 3;
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
     > span {
         font-size: 12px;
     }
 `;
 const SecondInsights = styled(Insights)`
-   position: absolute;
-   bottom: 141px;
+    position: absolute;
+    bottom: 141px;
     height: 80px;
     left: 81px;
     width: 250px;
     z-index: 1;
 `;
 const ThirdInsights = styled(SecondInsights)`
-   position: absolute;
-   bottom: 161px;
+    position: absolute;
+    bottom: 161px;
     height: 80px;
     width: 180px;
     z-index: 0;
@@ -168,9 +182,114 @@ const InsightsChild = styled.div`
 
     display: flex;
 `;
+const ConversationsInsights = styled(Insights)`
+    width: 170px;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 230px;
+    right: 88px;
+    > h3 {
+        font-size: 13px;
+        font-weight: 200;
+        text-align: center;
+        margin: 0 auto;
+    }
+    span {
+        background: #fff;
+        border-radius: 50%;
+        padding: 5px;
+        position: absolute;
+        font-size: 11px;
+        left: 25px;
+        border: 4px solid #f2f2f2;
+        top: 66px;
+    }
+    > p {
+        font-weight: 200;
+        text-align: center;
+        font-size: 11px;
+        width: 84px;
+        margin-top: 10px;
+    }
+`;
+
+
+
+
+const PercentageBox = styled.div`
+    width: 100px;
+    background: #ffd025;
+    height: 70px;
+    margin-top: 12px;
+    border-radius: 20px;
+    font-size: 35px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+`;
+const SalesInsights = styled(Insights)`
+      width: 190px;
+    flex-direction: column;
+    align-items: start;
+    justify-content: space-between;
+    height: 230px;
+    position: absolute;
+    bottom: -9px;
+    right: 41px;
+
+    >h3 {
+        color: #848484;
+        font-size: 13px;
+        font-weight: 200;
+    }
+    > hr  {
+    width: 100%;
+    background-color: #848484;
+    height: 1px;
+    border: none;
+    margin: 5px 0;
+ }
+`;
+const SeparatorCover = styled.div`
+    display: flex;
+    width: 100%;
+    gap: 2px;
+`;
+const Separator = styled.div<{bgColor?: string}>`
+    display: flex;
+    width: 35%;
+    border-radius: 10px;
+    height: 4px;
+    background: ${(props) => props.bgColor};;
+`;
+const UserSales = styled.div`
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+
+    img {
+        margin-right: 10px;
+    }
+ h3 {
+    font-size: 13px;
+    color: #848484;
+    font-weight: 200;
+
+
+ }
+
+ p {
+    margin-left: auto;
+    font-size: 12px;
+ }
+
+`;
+
 const TitleContainer = styled.div`
-   background: #F9F9F9;
-   height: 120px;
+    background: #f9f9f9;
+    height: 120px;
 `;
 const TitleText = styled.div`
     display: flex;
@@ -222,24 +341,72 @@ const Data: React.FC = () => {
                 </FullWidthText>
                 <FirstSectionRow>
                     <FirstSectionColumn>
-                        <LightGreyColumn>
-                            <RowText>Row 1</RowText>
-                            <RowText>Row 2</RowText>
-                        </LightGreyColumn>
+                        <StyledLightGreyColumn>
+                            <ConversationsInsights>
+                                <h3>Conversation rate</h3>
+                                <PercentageBox>
+                                    2.3%
+                                    <span className="material-symbols-outlined">
+                                        monitoring
+                                    </span>
+                                </PercentageBox>
+                                <p>Percentage of website visitors</p>
+                            </ConversationsInsights>
+                            <SalesInsights>
+                                <h3>Sales revenue</h3>
+                                <h2>$131.2K</h2>
+                                <SeparatorCover>
+                                    <Separator bgColor="#4AC785"></Separator>
+                                    <Separator bgColor="#FFCE1F"></Separator>
+                                    <Separator bgColor="#4AC785"></Separator>
+                                </SeparatorCover>
+                                <UserSales>
+                                <Image
+                                        src={DP}
+                                        alt="graph"
+                                        width={30}
+                                    />
+                                    <h3>
+                                        Min. price
+                                    </h3>
+
+                                    <p>1,200 $</p>
+                                </UserSales>
+                                <UserSales>
+                                <Image
+                                        src={DP2}
+                                        alt="graph"
+                                        width={30}
+                                    />
+                                    <h3>
+                                        Max. price
+                                    </h3>
+
+                                    <p>2,320 $</p>
+                                </UserSales>
+                                <hr/>
+                                <UserSales>
+                            
+                                    <h3>
+                                      Engagement rate
+                                    </h3>
+
+                                    <p>47.84 %</p>
+                                </UserSales>
+                            </SalesInsights>
+                        </StyledLightGreyColumn>
                         <TitleContainer>
-
-                        <Title>Improved customer service</Title>
-                        <Description>
-                            Analytics helps optimize service processes by
-                            providing information on how to improve interactions
-                            with customers and increase satisfaction
-                        </Description>
+                            <Title>Improved customer service</Title>
+                            <Description>
+                                Analytics helps optimize service processes by
+                                providing information on how to improve
+                                interactions with customers and increase
+                                satisfaction
+                            </Description>
                         </TitleContainer>
-
                     </FirstSectionColumn>
                     <FirstSectionColumn>
                         <LightGreyColumn>
-                    
                             <Insights>
                                 <InsightsChild>
                                     <TitleText>
@@ -266,31 +433,26 @@ const Data: React.FC = () => {
                                 </InsightsChild>
                             </Insights>
                             <SecondInsights>
-                            <InsightsChild>
+                                <InsightsChild>
                                     <TitleText>
-                                    <span className="material-symbols-outlined">
-linked_services
-</span>
+                                        <span className="material-symbols-outlined">
+                                            linked_services
+                                        </span>
                                         <h3>Finance reports</h3>
                                     </TitleText>
-                            
                                 </InsightsChild>
                             </SecondInsights>
-                            <ThirdInsights>
-                      
-                            </ThirdInsights>
+                            <ThirdInsights></ThirdInsights>
                             <RowText> </RowText>
                         </LightGreyColumn>
                         <TitleContainer>
-
-                        <Title>Monitoring key indicators</Title>
-                        <StyledDescription>
-                            Analytics platforms allow businesses to track KPIs,
-                            an important tool for measuring success and
-                            achieving goals{" "}
-                        </StyledDescription>
+                            <Title>Monitoring key indicators</Title>
+                            <StyledDescription>
+                                Analytics platforms allow businesses to track
+                                KPIs, an important tool for measuring success
+                                and achieving goals{" "}
+                            </StyledDescription>
                         </TitleContainer>
-
                     </FirstSectionColumn>
                 </FirstSectionRow>
             </FirstSection>
