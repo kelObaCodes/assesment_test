@@ -1,13 +1,10 @@
-import React, {useState} from "react";
+import React, { useState } from "react";
 
 import styled, { keyframes } from "styled-components";
 import Image from "next/image";
 import Radar from "../../public/images/radar.png";
-import AnimationOnScroll from "../hooks/inView";
-
-interface ChildComponentProps {
-    isInView?: boolean;
-  }
+import { useInView } from "react-intersection-observer";
+import Wavy from "@/hooks/wavyAnimation";
 
 const slideRightAnimation = keyframes`
   0% {
@@ -31,6 +28,9 @@ const FullWidthText = styled.div`
     font-size: 35px;
     width: 100%;
     text-align: left;
+    overflow: hidden;
+    height: 70px;
+    margin-bottom: 13px;
 `;
 
 const Row = styled.div`
@@ -89,7 +89,7 @@ const StyledCircle = styled(Circle)`
     z-index: 0;
     position: relative;
     right: 22px;
-    animation-delay: .3s;
+    animation-delay: 0.3s;
     opacity: 0;
     > h3 {
         font-weight: 300;
@@ -136,75 +136,98 @@ const HorizontalLine = styled.hr`
 const Paragraph = styled.p`
     margin: 0;
     font-size: 86px;
+    position: relative;
+    bottom: -54px;
+
 `;
-const GreySpan = styled.span`
-    color: #cccccc;
-    margin: 0 10px;
-    letter-spacing: 3px;
-`;
-const Efficiency: React.FC<ChildComponentProps> = ()=> {
-    const [isInViewOfEfficiency, setIsInViewEfficiency] = useState<boolean>(false);
+
+const Efficiency: React.FC = () => {
+    const [isInViewOfEfficiency, setIsInViewEfficiency] =
+        useState<boolean>(false);
+
+    const { ref: wavyRef, inView: isWavy } = useInView();
+    const { ref: conversation, inView: isConversation } = useInView();
 
     return (
-        <AnimationOnScroll setIsInView={setIsInViewEfficiency}>
-        <Container>
-            <Section>
-                <FullWidthText>
-                    <Paragraph>
-                        Maximize
-                        <GreySpan>Efficiency</GreySpan>
-                    </Paragraph>
-                    <Paragraph>With our intuitive</Paragraph>
-                </FullWidthText>
-            </Section>
-            <Section>
-                <Row>
-                    <Column>
-                        <Circle 
-                         className={isInViewOfEfficiency ? 'expandable' : ''}
-                   >
-                            <Image src={Radar} alt="graph" width={70} />
-                        </Circle>
-                        <StyledCircle 
-                         className={isInViewOfEfficiency ? 'expandable' : ''}
+            <Container>
+                <Section ref={wavyRef}>
+                    <FullWidthText>
+                        <Paragraph>
+                            {isWavy && <Wavy text="Maximize" />}
+                            {isWavy && (
+                                <Wavy text="Efficiency" className="grey-span" />
+                            )}
+                        </Paragraph>
+                    </FullWidthText>
+
+                    <FullWidthText>
+                        <Paragraph>
+                            {isWavy && <Wavy text="With our intuitive" />}
+                        </Paragraph>
+                    </FullWidthText>
+                </Section>
+                <Section>
+                    <Row>
+                        <Column ref={conversation}>
+                            <Circle
+                                className={
+                                    isConversation ? "expandable" : ""
+                                }
+                            >
+                                <Image src={Radar} alt="graph" width={70} />
+                            </Circle>
+                            <StyledCircle
+                                className={
+                                    isConversation ? "expandable" : ""
+                                }
+                            >
+                                <h3>45%</h3>
+                                <p>System grow faster</p>
+                            </StyledCircle>
+                        </Column>
+                        <StyledColumn
+                            className={
+                                isConversation
+                                    ? "progress-bar-slider "
+                                    : ""
+                            }
                         >
-                            <h3>45%</h3>
-                            <p>System grow faster</p>
-                        </StyledCircle>
-                    </Column>
-                    <StyledColumn
-                      className={isInViewOfEfficiency ? 'progress-bar-slider ' : ''}
-                    >
-                        <h3> Analytics service</h3>
-                    </StyledColumn>
-                </Row>
-            </Section>
-            <HorizontalLine />
-            <Section>
-                <Row>
-                    <StyledExploreColumn>
-                        <h3>
-                            Explore traffic sources, page behavior,
-                            conversations and more to gain deep insight into
-                            your audience. With us your business doesn't just
-                            adapt - it evolves
-                        </h3>
-                    </StyledExploreColumn>
-                    <Column>
-                        <HorizontalButtons>
-                            
-                            <Button 
-                             className={isInViewOfEfficiency ? 'expandable' : ''}
-                            >Request a demo</Button>
-                            <StyledButton 
-                                 className={isInViewOfEfficiency ? 'expandable' : ''}
-                            >Start for free </StyledButton>
-                        </HorizontalButtons>
-                    </Column>
-                </Row>
-            </Section>
-        </Container>
-        </AnimationOnScroll>
+                            <h3> Analytics service</h3>
+                        </StyledColumn>
+                    </Row>
+                </Section>
+                <HorizontalLine />
+                <Section>
+                    <Row>
+                        <StyledExploreColumn>
+                            <h3>
+                                Explore traffic sources, page behavior,
+                                conversations and more to gain deep insight into
+                                your audience. With us your business doesn't
+                                just adapt - it evolves
+                            </h3>
+                        </StyledExploreColumn>
+                        <Column>
+                            <HorizontalButtons>
+                                <Button
+                                    className={
+                                        isConversation ? "expandable" : ""
+                                    }
+                                >
+                                    Request a demo
+                                </Button>
+                                <StyledButton
+                                    className={
+                                        isConversation ? "expandable" : ""
+                                    }
+                                >
+                                    Start for free{" "}
+                                </StyledButton>
+                            </HorizontalButtons>
+                        </Column>
+                    </Row>
+                </Section>
+            </Container>
     );
 };
 

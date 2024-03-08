@@ -10,9 +10,6 @@ import Counter from '../hooks/countAnimation';
 // Main container for the two-column layout
 import AnimationOnScroll from "../hooks/inView";
 
-interface ChildComponentProps {
-    isInView?: boolean;
-  }
 
 const Container = styled.div`
     display: flex;
@@ -267,7 +264,7 @@ const GraphqRateColumn = styled.div`
         font-size: 16px;
     }
 `;
-const Analytics: React.FC<ChildComponentProps>= ({ isInView }) => {
+const Analytics: React.FC= () => {
     const [isInViewOfAnalytics, setIsInOfAnalytics] = useState<boolean>(false);
 
     const [count, setCount] = useState(1);

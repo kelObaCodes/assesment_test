@@ -7,6 +7,8 @@ import Mobile from "../../public/images/mobile.png";
 import Menu from "../../public/images/menu.png";
 import background from "../../public/images/background.png";
 import AnimationOnScroll from "../hooks/inView";
+import { useInView } from 'react-intersection-observer';
+import Wavy from "@/hooks/wavyAnimation";
 interface ChildComponentProps {
     isInView?: boolean;
 }
@@ -128,6 +130,8 @@ const BigReveal = styled.div`
 
 const Actions: React.FC<ChildComponentProps> = () => {
     const [isInViewOfActions, setIsInViewfActions] = useState<boolean>(false);
+    const { ref: actionRef, inView: isAction } = useInView()
+    
     return (
         <AnimationOnScroll setIsInView={setIsInViewfActions}>
             <Container>
@@ -136,9 +140,10 @@ const Actions: React.FC<ChildComponentProps> = () => {
                         <Title className={isInViewOfActions ? "slideIn " : ""}>
                             Turning data into real actions and ideas.
                         </Title>
-                        <ButtonContainer>
+                        <ButtonContainer >
                             <Button
-                                className={isInViewOfActions ? "slideIn " : ""}
+                                className={isAction ? "slideIn " : ""}
+                                ref={actionRef}
                             >
                                 <ButtonText>Instant insights</ButtonText>
                                 <PlusIcon>
@@ -148,7 +153,7 @@ const Actions: React.FC<ChildComponentProps> = () => {
                                 </PlusIcon>
                             </Button>
                             <Button
-                                className={isInViewOfActions ? "slideIn " : ""}
+                                className={isAction ? "slideIn " : ""}
                             >
                                 <ButtonText>AI technology</ButtonText>
                                 <PlusIcon>
@@ -201,9 +206,7 @@ const Actions: React.FC<ChildComponentProps> = () => {
                 }`}
                     />
                     <BigText>Moniepoint</BigText>
-                    <div className="reveal">
-                        <span className="reveal-inner">An amazing title</span>
-                    </div>
+                
                 </SecondSection>
             </Container>
         </AnimationOnScroll>

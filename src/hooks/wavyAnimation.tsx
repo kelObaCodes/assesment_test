@@ -1,17 +1,19 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef } from 'react';
 
-const Wavy: React.FC<{ text: string }> = ({ text }) => {
+const Wavy: React.FC<{ text: string, className?: string }> = ({ text, className }) => {
+  const containerRef = useRef<HTMLSpanElement>(null);
+
   useEffect(() => {
     const delay = 200;
-    const h1 = document.getElementById('animated');
+    const container = containerRef.current;
 
-    if (h1) {
-      h1.innerHTML = text
+    if (container) {
+      container.innerHTML = text
         .split('')
-        .map(letter => `<span>${letter}</span>`)
+        .map((letter, index) => `<span key=${index}>${letter}</span>`)
         .join('');
 
-      Array.from(h1.children).forEach((span, index) => {
+      Array.from(container.children).forEach((span, index) => {
         setTimeout(() => {
           (span as HTMLElement).classList.add('wavy');
         }, index * 60 + delay);
@@ -20,11 +22,9 @@ const Wavy: React.FC<{ text: string }> = ({ text }) => {
   }, [text]);
 
   return (
-    <div id="animated">
-      {text.split('').map((letter, index) => (
-        <span key={index}>{letter}</span>
-      ))}
-    </div>
+    <span 
+    className={className}
+    ref={containerRef} />
   );
 };
 

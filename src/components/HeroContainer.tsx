@@ -1,13 +1,11 @@
 import React, {useState} from "react";
-import AnimationOnScroll from "../hooks/inView";
 import styled from "styled-components";
 import Image from "next/image";
-import Laptop from "../../public/images/laptop.png";
+import Laptop from "../../public/images/laptop_.png";
+import Wavy from "@/hooks/wavyAnimation";
 
+import { useInView } from 'react-intersection-observer';
 import Circle from "./Circle";
-interface ChildComponentProps {
-    isInView?: boolean;
-  }
 
 interface VerticalDivProps {
     left?: string;
@@ -26,15 +24,12 @@ const VerticalDiv = styled.div<VerticalDivProps>`
     ${(props) => (props.left ? `left: ${props.left};` : "")}
 `;
 
-const Paragraph = styled.p`
-    margin: 0;
-    font-size: 86px;
-`;
+
 const ImageContainer = styled.div`
     position: relative;
     > img {
         position: absolute;
-        left: 402px;
+        left: 350px;
         bottom: -53px;
     }
 `;
@@ -46,11 +41,22 @@ const GreySpan = styled.span`
   margin: 0 10px;
 `;
 
-const Hero: React.FC<ChildComponentProps> = () => {
-    const [isInViewOfHero, setIsInViewOfhero] = useState<boolean>(false);
+const FullWidthText = styled.div`
+    font-size: 35px;
+    width: 100%;
+    overflow: hidden;
+    height: 86px;
+`;
+const Paragraph = styled.p`
+    margin: 0;
+    font-size: 86px;
+    position: relative;
+    bottom: -54px;
+`;
+const Hero: React.FC = () => {
+    const { ref: text, inView: isText } = useInView()
 
     return (
-        <AnimationOnScroll setIsInView={setIsInViewOfhero}>
         <Container>
             <VerticalDiv left="30%">
                 <Circle
@@ -63,7 +69,7 @@ const Hero: React.FC<ChildComponentProps> = () => {
                     left="-152px"
                     top="5px"
                     iconcolor={"#FE4A22"}
-                    className={isInViewOfHero ? 'expandable' : ''}
+                    className={isText ? 'expandable' : ''}
                 />
                 <Circle
                     icon={
@@ -77,13 +83,22 @@ const Hero: React.FC<ChildComponentProps> = () => {
                     left="-102px"
                     top="5px"
                     iconcolor={"#fff"}
-                    className={isInViewOfHero ? 'expandable' : ''}
+                    className={isText ? 'expandable' : ''}
                 />
-                <Paragraph>Analytics</Paragraph>
+                  <FullWidthText ref={text}>
+                    <Paragraph>
+                        {
+                            isText &&
+                    <Wavy text="Analytics" />
+
+                        }
+                    
+                    </Paragraph>
+                    </FullWidthText>
 
                 <ImageContainer>
-                    <Image src={Laptop} alt="Laptop" width={250}
-                    className={isInViewOfHero ? 'expandable' : ''}
+                    <Image src={Laptop} alt="Laptop" width={290}
+                    className={isText ? 'expandable' : ''}
                     />
                     <Circle
                         icon={
@@ -94,23 +109,52 @@ const Hero: React.FC<ChildComponentProps> = () => {
                         color="#FE4A22"
                         height="40px"
                         width="40px"
-                        right="600px"
-                        top="-124px"
+                        right="648px"
+                        top="-127px"
+                        
                         iconcolor={"#fff"}
-                        className={isInViewOfHero ? 'expandable' : ''}
+                        className={isText ? 'expandable' : ''}
                     />
                 </ImageContainer>
             </VerticalDiv>
-            <VerticalDiv left="6%">
-                <Paragraph>that 
-                    <GreySpan>helps</GreySpan>
-                     you</Paragraph>
+            <VerticalDiv left="7%">
+            <FullWidthText>
+                    <Paragraph>
+                    {
+                            isText &&
+                    <Wavy text="that" />
+
+                        }
+                        {
+                            isText &&
+                            <Wavy text="helps" className="grey-span" />
+                        }
+                        {
+                            isText &&
+                            <Wavy text="you"/>
+                        }
+                        
+                    </Paragraph>
+                    </FullWidthText>
+             
             </VerticalDiv>
-            <VerticalDiv left="20%">
-                <Paragraph>shape
-                   <SpanSeparator/>
-                     the future</Paragraph>
-                     <span>
+            <VerticalDiv left="23%">
+            <FullWidthText>
+                    <Paragraph>
+                    {
+                            isText &&
+                    <Wavy text="shape" />
+
+                        }
+                          <SpanSeparator/>
+                        {
+                            isText &&
+                            <Wavy text="the future" />
+                        }
+                     
+                        
+                    </Paragraph>
+                    <span>
                     <Circle
                         icon={
                             <span className="material-symbols-outlined">
@@ -120,16 +164,18 @@ const Hero: React.FC<ChildComponentProps> = () => {
                         color="#FFD025"
                         height="70px"
                         width="70px"
-                        left="240px"
-                        top="30px"
+                        left="247px"
+                        top="7px"
                         iconcolor={"#222"}
-                        className={isInViewOfHero ? 'expandable' : ''}
+                        className={isText ? 'expandable' : ''}
                     />
                     {'        '}
                     </span>
+               
+                    </FullWidthText>
+                  
             </VerticalDiv>
         </Container>
-        </AnimationOnScroll>
     );
 };
 

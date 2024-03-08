@@ -7,13 +7,8 @@ import DP2 from "../../public/images/dp_2.png";
 import background from "../../public/images/background.png";
 import Counter from "../hooks/countAnimation";
 import Wavy from "@/hooks/wavyAnimation";
-import AnimationOnScroll from "../hooks/inView";
 
 import { useInView } from 'react-intersection-observer';
-
-interface ChildComponentProps {
-    isInView?: boolean;
-}
 
 const Container = styled.div`
     display: flex;
@@ -26,12 +21,16 @@ const Container = styled.div`
 const FirstSection = styled.div`
     width: 100%;
     padding: 20px;
+    margin-top: 40px;
 `;
 
 const FullWidthText = styled.div`
     font-size: 35px;
+    width: 100%;
     text-align: left;
-    margin-bottom: 40px;
+    overflow: hidden;
+    height: 86px;
+    margin-bottom: 13px;
 `;
 
 const FirstSectionRow = styled.div`
@@ -90,7 +89,7 @@ const StyledDescription = styled(Description)`
 `;
 
 const SecondSection = styled.div`
-    margin: 134px 0 100px 0;
+    margin: 80px 0 100px 0;
 `;
 
 const Button = styled.button`
@@ -109,6 +108,7 @@ const Button = styled.button`
     justify-content: center;
     opacity: 0;
     align-items: center;
+    box-shadow: #fe4a22 0px 7px 12px 0px;
     > span {
         font-size: 44px;
         rotate: 120deg;
@@ -118,6 +118,7 @@ const Button = styled.button`
 const BigTextCover = styled.div`
     overflow: hidden;
     height: 100px;
+    margin: 20px 0;
 `;
 const BigText = styled.h1`
     font-size: 90px;
@@ -156,10 +157,8 @@ const CenteredButton2 = styled(CenteredButton1)`
 const Paragraph = styled.p`
     margin: 0;
     font-size: 86px;
-`;
-const GreySpan = styled.span`
-    color: #cccccc;
-    margin: 0 10px;
+    position: relative;
+    bottom: -54px;
 `;
 
 const Insights = styled.div`
@@ -351,29 +350,48 @@ const TotalProfit = styled.div`
         margin-left: 0;
     }
 `;
-const Data: React.FC<ChildComponentProps> = ({ isInView }) => {
-
-    const [isInViewOfData, setIsInViewData] = useState<boolean>(false);
-
+const Data: React.FC = () => {
 
     const { ref: getStarted, inView: isGetStarted } = useInView()
     const { ref: conversation, inView: isConversation } = useInView()
-
-useEffect(()=> {
-console.log(isInViewOfData, 'in view')
-},[isInViewOfData])
+    const { ref: text, inView: isText } = useInView()
 
 
     return (
-        <AnimationOnScroll setIsInView={setIsInViewData}>
         <Container>
             <FirstSection>
+            <FullWidthText ref={text}>
+                    <Paragraph>
+                        {
+                            isText &&
+                    <Wavy text="We give you full" />
+
+                        }
+                    
+                    </Paragraph>
+                    </FullWidthText>
+
+            <FullWidthText>
+                    <Paragraph>
+                     
+                        {
+                            isText &&
+                            <Wavy text="control" className="grey-span" />
+                        }
+                           {
+                            isText &&
+                    <Wavy text="over your data" />
+
+                        }
+                    </Paragraph>
+                    </FullWidthText>
+{/* 
                 <FullWidthText>
                     <Paragraph>We give you full</Paragraph>
                     <Paragraph>
                         <GreySpan>control</GreySpan> over your data
                     </Paragraph>
-                </FullWidthText>
+                </FullWidthText> */}
                 <FirstSectionRow
                    ref={conversation}
                 >
@@ -387,7 +405,7 @@ console.log(isInViewOfData, 'in view')
                             >
                                 <h3>Conversation rate</h3>
                                 <PercentageBox 
-                                    className={isConversation ? "progress-bar " : ""}
+                                    className={isConversation ? "reveal-percent" : ""}
                                 >
                                     2.3%
                                     <span className="material-symbols-outlined">
@@ -537,7 +555,6 @@ console.log(isInViewOfData, 'in view')
                 </CenteredButtons>
             </SecondSection>
         </Container>
-        </AnimationOnScroll>
     );
 };
 
