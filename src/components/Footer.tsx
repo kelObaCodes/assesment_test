@@ -1,9 +1,13 @@
-import React from "react";
+import React, {useState} from "react";
 import styled from "styled-components";
 import Image from "next/image";
+import AnimationOnScroll from "../hooks/inView";
 
 import BarCode from "../../public/images/bar_code.png";
 
+interface ChildComponentProps {
+    isInView?: boolean;
+  }
 
 const FooterContainer = styled.div`
     background-color: #0d0d0d;
@@ -66,6 +70,10 @@ const StyledHorizontalMenuItem = styled.div`
 const StyledBarCodeColumn = styled(Column)`
     position: relative;
  text-align: end;
+ img {
+    opacity: 0;
+    margin-left: auto;
+ }
  
 `;
 const StyledRowColumn = styled(Row)`
@@ -95,12 +103,16 @@ const HrSeparator = styled.hr`
     margin: 20px 0;
 `;
 
-const Footer: React.FC = () => {
+const Footer: React.FC<ChildComponentProps> = () => {
+    const [isInViewOfFooter, setIsInViewFooter] = useState<boolean>(false);
+
+
     return (
+        <AnimationOnScroll setIsInView={setIsInViewFooter}>
         <FooterContainer>
             <StyledRow>
                 <Column>
-                    <HorizontalMenu>
+                    <HorizontalMenu  className={isInViewOfFooter ? 'slideIn' : ''}>
                         <HorizontalMenuItem>About</HorizontalMenuItem>
                         <HorizontalMenuItem>Why Us</HorizontalMenuItem>
                         <HorizontalMenuItem>Platform</HorizontalMenuItem>
@@ -110,13 +122,19 @@ const Footer: React.FC = () => {
                 </Column>
                 <Column>
                     <StyledHorizontalMenuItem>
-                        <h2>help@moniepoint.com</h2>
+                        <h2
+                            className={isInViewOfFooter ? 'slideIn' : ''}
+                        >help@moniepoint.com</h2>
                     </StyledHorizontalMenuItem>
                 </Column>
             </StyledRow>
             <HrSeparator/>
-            <Row>
-                <Column>
+            <Row
+              className={isInViewOfFooter ? 'slideIn' : ''}
+            >
+                <Column
+                  className={isInViewOfFooter ? 'slideIn' : ''}
+                >
                     <VerticalMenu>
                         <VerticalMenuItem>
                             Warrensville Heights
@@ -146,7 +164,7 @@ const Footer: React.FC = () => {
                 <StyledTradeMarkColumn>
                     <h1>Moniepoint &reg;</h1>
                 </StyledTradeMarkColumn>
-                <Column>
+                <Column className={isInViewOfFooter ? 'slideIn' : ''}>
                     <StyledHorizontalBottomMenu>
                         <StyledHorizontalBottomMenuItem>
                             Privacy policy
@@ -157,10 +175,12 @@ const Footer: React.FC = () => {
                     </StyledHorizontalBottomMenu>
                 </Column>
                 <StyledBarCodeColumn>
-                    <Image src={BarCode} alt="Bar code" width={100} className="expandable"/>
+                    <Image src={BarCode} alt="Bar code" width={100}
+                    className={isInViewOfFooter ? 'expandable' : ''}/>
                 </StyledBarCodeColumn>
             </StyledRowColumn>
         </FooterContainer>
+        </AnimationOnScroll>
     );
 };
 

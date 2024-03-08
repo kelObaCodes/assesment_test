@@ -1,7 +1,14 @@
-import React from "react";
+import React, {useState} from "react";
+
 import styled, { keyframes } from "styled-components";
 import Image from "next/image";
 import Radar from "../../public/images/radar.png";
+import AnimationOnScroll from "../hooks/inView";
+
+interface ChildComponentProps {
+    isInView?: boolean;
+  }
+
 const slideRightAnimation = keyframes`
   0% {
     transform: translateX(100%);
@@ -74,12 +81,16 @@ const Circle = styled.div`
     align-items: center;
     flex-direction: column;
     z-index: 1;
+    animation-delay: 0;
+    opacity: 0;
 `;
 const StyledCircle = styled(Circle)`
     background-color: #ffd025;
     z-index: 0;
     position: relative;
     right: 22px;
+    animation-delay: .3s;
+    opacity: 0;
     > h3 {
         font-weight: 300;
     }
@@ -115,6 +126,7 @@ const Button = styled(StyledButton)`
     background: #f2f2f2;
     border: 1px solid #f2f2f2;
     color: #000;
+    animation-duration: 2s;
 `;
 const HorizontalLine = styled.hr`
     border: 0;
@@ -130,8 +142,11 @@ const GreySpan = styled.span`
     margin: 0 10px;
     letter-spacing: 3px;
 `;
-const Efficiency: React.FC = () => {
+const Efficiency: React.FC<ChildComponentProps> = ()=> {
+    const [isInViewOfEfficiency, setIsInViewEfficiency] = useState<boolean>(false);
+
     return (
+        <AnimationOnScroll setIsInView={setIsInViewEfficiency}>
         <Container>
             <Section>
                 <FullWidthText>
@@ -145,15 +160,21 @@ const Efficiency: React.FC = () => {
             <Section>
                 <Row>
                     <Column>
-                        <Circle>
+                        <Circle 
+                         className={isInViewOfEfficiency ? 'expandable' : ''}
+                   >
                             <Image src={Radar} alt="graph" width={70} />
                         </Circle>
-                        <StyledCircle>
+                        <StyledCircle 
+                         className={isInViewOfEfficiency ? 'expandable' : ''}
+                        >
                             <h3>45%</h3>
                             <p>System grow faster</p>
                         </StyledCircle>
                     </Column>
-                    <StyledColumn>
+                    <StyledColumn
+                      className={isInViewOfEfficiency ? 'progress-bar-slider ' : ''}
+                    >
                         <h3> Analytics service</h3>
                     </StyledColumn>
                 </Row>
@@ -171,13 +192,19 @@ const Efficiency: React.FC = () => {
                     </StyledExploreColumn>
                     <Column>
                         <HorizontalButtons>
-                            <Button>Request a demo</Button>
-                            <StyledButton>Start for free </StyledButton>
+                            
+                            <Button 
+                             className={isInViewOfEfficiency ? 'expandable' : ''}
+                            >Request a demo</Button>
+                            <StyledButton 
+                                 className={isInViewOfEfficiency ? 'expandable' : ''}
+                            >Start for free </StyledButton>
                         </HorizontalButtons>
                     </Column>
                 </Row>
             </Section>
         </Container>
+        </AnimationOnScroll>
     );
 };
 

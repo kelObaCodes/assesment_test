@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState, useEffect} from "react";
 import styled from "styled-components";
 import Image from "next/image";
 import User from "../../public/images/user.png";
@@ -6,7 +6,14 @@ import Angle from "../../public/images/angle.png";
 import Angle2 from "../../public/images/angle_2.png";
 import Stat from "../../public/images/stat.png";
 import Circle from "./Circle";
+import Counter from '../hooks/countAnimation';
 // Main container for the two-column layout
+import AnimationOnScroll from "../hooks/inView";
+
+interface ChildComponentProps {
+    isInView?: boolean;
+  }
+
 const Container = styled.div`
     display: flex;
     flex-direction: column;
@@ -260,8 +267,23 @@ const GraphqRateColumn = styled.div`
         font-size: 16px;
     }
 `;
-const TwoColumnLayout: React.FC = () => {
+const Analytics: React.FC<ChildComponentProps>= ({ isInView }) => {
+    const [isInViewOfAnalytics, setIsInOfAnalytics] = useState<boolean>(false);
+
+    const [count, setCount] = useState(1);
+
+
+    useEffect(() => {
+        const interval = setInterval(() => {
+          if (count < 120) {
+            setCount(count + 1);
+          }
+        }, 100); // Adjust the interval duration as needed
+    
+        return () => clearInterval(interval);
+      }, [count]);
     return (
+        <AnimationOnScroll setIsInView={setIsInOfAnalytics}>
         <Container>
             <StartRow>
                 <StyledColumn width="65%">
@@ -311,7 +333,11 @@ const TwoColumnLayout: React.FC = () => {
                                 </div>
                                 <div>
                                     <Image src={Angle2} alt="user" width={40} />
-                                    <h1>56K</h1>
+                                    <h1>
+                                        {
+                                    isInViewOfAnalytics &&
+                                    <Counter count={56} />}
+                                   K</h1>
                                 </div>
                             </VisitorsColumn>
                         </StatContainer>
@@ -322,20 +348,35 @@ const TwoColumnLayout: React.FC = () => {
                                     hexagon
                                 </span>
                                 <p>Rate</p>
-                                <h2>+58%</h2>
+                                <h2>+
+                                    {
+                                         isInViewOfAnalytics &&
+                                         <Counter count={58} />
+                                    }
+                                       %</h2>
                             </GraphqRateColumn>
                         </GraphqColumn>
                     </SecondSubColumn>
                 </ColumnA>
                 <ColumnB>
                     <SubColumnCover>
-                        <SubColumn>
+                        <SubColumn 
+                          className={isInViewOfAnalytics ? "slide-in-left " : ""}
+                        >
                             <Image src={User} alt="user" width={60} />
                         </SubColumn>
-                        <StyledSubColumn>
+                        <StyledSubColumn
+                          className={isInViewOfAnalytics ? "slide-in-right " : ""}
+                        
+                        >
                             <h3>Transactions</h3>
                             <Image src={Angle} alt="user" width={50} />
-                            <h1>43K</h1>
+                            <h1 className="">
+                                {
+                                    isInViewOfAnalytics &&
+                                    <Counter count={43} />
+                                }
+                                K</h1>
                         </StyledSubColumn>
                     </SubColumnCover>
 
@@ -357,7 +398,9 @@ const TwoColumnLayout: React.FC = () => {
                     <StyledCenteredColumn>
                         <span style={{ fontSize: "65px" }}>45%</span>
                     </StyledCenteredColumn>
-                    <StyledCenteredColumn>
+                    <StyledCenteredColumn
+                    className={isInViewOfAnalytics ? "slideIn " : ""}
+                    >
                         <span style={{ fontSize: "13px" }}>
                             Increase your analytics efficiency by upto 45%.
                             unique algorithms provides insights from data,
@@ -368,7 +411,8 @@ const TwoColumnLayout: React.FC = () => {
                 </Row>
             </CenteredRow>
         </Container>
+        </AnimationOnScroll>
     );
 };
 
-export default TwoColumnLayout;
+export default Analytics;

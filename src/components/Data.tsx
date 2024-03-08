@@ -1,10 +1,19 @@
-import React from "react";
+import React, {useState, useEffect} from "react";
 import styled from "styled-components";
 import Image from "next/image";
 import Graph from "../../public/images/graph.png";
 import DP from "../../public/images/dp_1.png";
 import DP2 from "../../public/images/dp_2.png";
 import background from "../../public/images/background.png";
+import Counter from "../hooks/countAnimation";
+import Wavy from "@/hooks/wavyAnimation";
+import AnimationOnScroll from "../hooks/inView";
+
+import { useInView } from 'react-intersection-observer';
+
+interface ChildComponentProps {
+    isInView?: boolean;
+}
 
 const Container = styled.div`
     display: flex;
@@ -40,7 +49,9 @@ const FirstSectionColumn = styled.div`
     background-repeat: repeat;
     padding-top: 40px;
     position: relative;
-    box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 6px -1px, rgba(0, 0, 0, 0.06) 0px 2px 4px -1px;
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 6px -1px,
+        rgba(0, 0, 0, 0.06) 0px 2px 4px -1px;
+        opacity: 0;
 `;
 
 const LightGreyColumn = styled.div`
@@ -55,7 +66,6 @@ const StyledLightGreyColumn = styled(LightGreyColumn)`
     position: relative;
     margin-top: -65px;
     margin-bottom: 40px;
-   
 `;
 
 const RowText = styled.div``;
@@ -97,6 +107,7 @@ const Button = styled.button`
     text-align: center;
     display: flex;
     justify-content: center;
+    opacity: 0;
     align-items: center;
     > span {
         font-size: 44px;
@@ -104,11 +115,17 @@ const Button = styled.button`
     }
 `;
 
+const BigTextCover = styled.div`
+    overflow: hidden;
+    height: 100px;
+`;
 const BigText = styled.h1`
     font-size: 90px;
     text-align: center;
     margin-top: 14px;
     font-weight: 400;
+    position: relative;
+    top: 53px;
 `;
 
 const DescriptionText = styled.p`
@@ -216,9 +233,6 @@ const ConversationsInsights = styled(Insights)`
     }
 `;
 
-
-
-
 const PercentageBox = styled.div`
     width: 100px;
     background: #ffd025;
@@ -231,7 +245,7 @@ const PercentageBox = styled.div`
     align-items: center;
 `;
 const SalesInsights = styled(Insights)`
-      width: 190px;
+    width: 190px;
     flex-direction: column;
     align-items: start;
     justify-content: space-between;
@@ -240,30 +254,39 @@ const SalesInsights = styled(Insights)`
     bottom: -9px;
     right: 41px;
 
-    >h3 {
+    > h3 {
         color: #848484;
         font-size: 13px;
         font-weight: 200;
     }
-    > hr  {
-    width: 100%;
-    background-color: #848484;
-    height: 1px;
-    border: none;
-    margin: 5px 0;
- }
+    > hr {
+        width: 100%;
+        background-color: #848484;
+        height: 1px;
+        border: none;
+        margin: 5px 0;
+    }
 `;
 const SeparatorCover = styled.div`
     display: flex;
     width: 100%;
     gap: 2px;
+    div:nth-child(1) {
+        animation-delay: 0s;
+    }
+    div:nth-child(2) {
+        animation-delay: 2s;
+    }
+    div:nth-child(3) {
+        animation-delay: 3s;
+    }
 `;
-const Separator = styled.div<{bgcolor?: string}>`
+const Separator = styled.div<{ bgcolor?: string }>`
     display: flex;
-    width: 35%;
+
     border-radius: 10px;
     height: 4px;
-    background: ${(props) => props.bgcolor};;
+    background: ${(props) => props.bgcolor};
 `;
 const UserSales = styled.div`
     display: flex;
@@ -274,19 +297,16 @@ const UserSales = styled.div`
     img {
         margin-right: 10px;
     }
- h3 {
-    font-size: 13px;
-    color: #848484;
-    font-weight: 200;
+    h3 {
+        font-size: 13px;
+        color: #848484;
+        font-weight: 200;
+    }
 
-
- }
-
- p {
-    margin-left: auto;
-    font-size: 12px;
- }
-
+    p {
+        margin-left: auto;
+        font-size: 12px;
+    }
 `;
 
 const TitleContainer = styled.div`
@@ -331,8 +351,21 @@ const TotalProfit = styled.div`
         margin-left: 0;
     }
 `;
-const Data: React.FC = () => {
+const Data: React.FC<ChildComponentProps> = ({ isInView }) => {
+
+    const [isInViewOfData, setIsInViewData] = useState<boolean>(false);
+
+
+    const { ref: getStarted, inView: isGetStarted } = useInView()
+    const { ref: conversation, inView: isConversation } = useInView()
+
+useEffect(()=> {
+console.log(isInViewOfData, 'in view')
+},[isInViewOfData])
+
+
     return (
+        <AnimationOnScroll setIsInView={setIsInViewData}>
         <Container>
             <FirstSection>
                 <FullWidthText>
@@ -341,12 +374,21 @@ const Data: React.FC = () => {
                         <GreySpan>control</GreySpan> over your data
                     </Paragraph>
                 </FullWidthText>
-                <FirstSectionRow>
-                    <FirstSectionColumn>
+                <FirstSectionRow
+                   ref={conversation}
+                >
+                    
+                    <FirstSectionColumn  className={isConversation ? "slideIn" : ""}
+                 
+                    >
                         <StyledLightGreyColumn>
-                            <ConversationsInsights>
+                            <ConversationsInsights
+                             className={isConversation ? "slide-in-left " : ""}
+                            >
                                 <h3>Conversation rate</h3>
-                                <PercentageBox>
+                                <PercentageBox 
+                                    className={isConversation ? "progress-bar " : ""}
+                                >
                                     2.3%
                                     <span className="material-symbols-outlined">
                                         monitoring
@@ -354,44 +396,48 @@ const Data: React.FC = () => {
                                 </PercentageBox>
                                 <p>Percentage of website visitors</p>
                             </ConversationsInsights>
-                            <SalesInsights>
+                            <SalesInsights
+                              className={isConversation ? "slide-in-right " : ""}
+                            >
                                 <h3>Sales revenue</h3>
-                                <h2>$131.2K</h2>
+                                <h2>
+                                    $
+                                    {
+                                        isConversation && 
+                                        <Counter count={131} />
+                                    } K
+                                </h2>
                                 <SeparatorCover>
-                                    <Separator bgcolor="#4AC785"></Separator>
-                                    <Separator bgcolor="#FFCE1F"></Separator>
-                                    <Separator bgcolor="#4AC785"></Separator>
+                                    <Separator
+                                        bgcolor="#4AC785"
+                                        className={isConversation ? "progress-bar" : ""}
+                                    ></Separator>
+                                    <Separator
+                                        bgcolor="#FFCE1F"
+                                        className={isConversation ? "progress-bar" : ""}
+                                    ></Separator>
+                                    <Separator
+                                        bgcolor="#4AC785"
+                                        className={isConversation ? "progress-bar" : ""}
+                                    ></Separator>
                                 </SeparatorCover>
                                 <UserSales>
-                                <Image
-                                        src={DP}
-                                        alt="graph"
-                                        width={30}
-                                    />
-                                    <h3>
-                                        Min. price
-                                    </h3>
+                                    <Image src={DP} alt="graph" width={30} />
+                                    <h3>Min. price</h3>
 
                                     <p>1,200 $</p>
                                 </UserSales>
-                                <UserSales>
-                                <Image
-                                        src={DP2}
-                                        alt="graph"
-                                        width={30}
-                                    />
-                                    <h3>
-                                        Max. price
-                                    </h3>
+                                <UserSales
+                              
+                                >
+                                    <Image src={DP2} alt="graph" width={30} />
+                                    <h3>Max. price</h3>
 
                                     <p>2,320 $</p>
                                 </UserSales>
-                                <hr/>
+                                <hr />
                                 <UserSales>
-                            
-                                    <h3>
-                                      Engagement rate
-                                    </h3>
+                                    <h3>Engagement rate</h3>
 
                                     <p>47.84 %</p>
                                 </UserSales>
@@ -407,9 +453,9 @@ const Data: React.FC = () => {
                             </Description>
                         </TitleContainer>
                     </FirstSectionColumn>
-                    <FirstSectionColumn>
+                    <FirstSectionColumn className={isConversation ? "slideIn" : ""}>
                         <LightGreyColumn>
-                            <Insights>
+                            <Insights   className={isConversation ? "slideIn" : ""}>
                                 <InsightsChild>
                                     <TitleText>
                                         <span className="material-symbols-outlined">
@@ -434,7 +480,7 @@ const Data: React.FC = () => {
                                     />
                                 </InsightsChild>
                             </Insights>
-                            <SecondInsights>
+                            <SecondInsights   className={isConversation ? "bounce-up" : ""}>
                                 <InsightsChild>
                                     <TitleText>
                                         <span className="material-symbols-outlined">
@@ -444,7 +490,7 @@ const Data: React.FC = () => {
                                     </TitleText>
                                 </InsightsChild>
                             </SecondInsights>
-                            <ThirdInsights></ThirdInsights>
+                            <ThirdInsights   className={isConversation ? "bounce-up" : ""}></ThirdInsights>
                             <RowText> </RowText>
                         </LightGreyColumn>
                         <TitleContainer>
@@ -459,11 +505,22 @@ const Data: React.FC = () => {
                 </FirstSectionRow>
             </FirstSection>
             {/* <hr style={{ width: '100%' }} /> */}
-            <SecondSection>
-                <Button className="animate-fly-in">
+            <SecondSection ref={getStarted}>
+                <Button 
+                className={isGetStarted ? "animate-fly-in" : ""}
+                >
                     <span className="material-symbols-outlined">link</span>
                 </Button>
-                <BigText>Get Started</BigText>
+
+                <BigTextCover>
+                    <BigText >
+                        {
+                            isGetStarted &&
+                            <Wavy text="Get Started" />
+                        }
+                         
+                    </BigText>
+                </BigTextCover>
                 <DescriptionText>
                     Turn Information into advantage Start using
                 </DescriptionText>
@@ -471,11 +528,16 @@ const Data: React.FC = () => {
                     Monie Point today.Sign up for a free trial
                 </DescriptionText>
                 <CenteredButtons>
-                    <CenteredButton1>Request a demo</CenteredButton1>
-                    <CenteredButton2 className="expandable">Start for free </CenteredButton2>
+                    <CenteredButton1 className={isGetStarted ? "expandable" : ""}>
+                        Request a demo
+                    </CenteredButton1>
+                    <CenteredButton2 className={isGetStarted ? "expandable" : ""}>
+                        Start for free{" "}
+                    </CenteredButton2>
                 </CenteredButtons>
             </SecondSection>
         </Container>
+        </AnimationOnScroll>
     );
 };
 

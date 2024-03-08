@@ -10,6 +10,7 @@ interface CircleProps {
   top?: string;
   right?: string;
   iconcolor?: string;
+  className?: string;
 }
 
 const CircleContainer = styled.div<{
@@ -45,7 +46,8 @@ const Circle: React.FC<CircleProps> = ({
   left,
   top,
   right,
-  iconcolor
+  iconcolor,
+  className,
 }) => {
   return (
     <CircleContainer
@@ -55,6 +57,7 @@ const Circle: React.FC<CircleProps> = ({
       left={left}
       top={top}
       right={right}
+      className={className}
     >
       <Icon iconcolor={iconcolor}>{icon}</Icon>
     </CircleContainer>

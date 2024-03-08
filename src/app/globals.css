@@ -34,11 +34,12 @@ body {
 
 @keyframes fly-in {
   0% {
-      transform: scale(40) translateY(945px)
+      transform: scale(40) translateY(945px);
   }
 
   to {
-      transform: scale(1) translate(0)
+      transform: scale(1) translate(0);
+      opacity: 1;
   }
 }
 
@@ -53,14 +54,164 @@ body {
     transform: scale(.01); /* Start at original size */
   }
   100% {
-    transform: scale(1); /* End at 1.5 times the original size */
+
+    transform: scale(1);
+opacity: 1;
+/* End at 1.5 times the original size */
   }
 }
 
 .expandable {
-
-  animation: expand 1s ease forwards;
-
+  animation: expand 2.5s ease forwards;
+  display: block;
   transition: transform 3s ease; /* Smooth transition for transform property */
 }
 
+
+
+
+@keyframes count {
+  from {
+    content: '0';
+  }
+  to {
+    content: '100';
+  }
+}
+
+.counter::before {
+  content: '0';
+  font-size: 24px;
+  animation: count 3s steps(100) forwards;
+}
+
+
+
+@keyframes fillSlider {
+  0% {
+    width: 0;
+  }
+  100% {
+    width: 300px;
+  }
+}
+@keyframes fillProgressBar {
+  0% {
+    width: 0;
+  }
+  100% {
+    width: 50px;
+  }
+}
+@keyframes revealBar {
+  0% {
+    width: 840px;
+  }
+  100% {
+    width: 0;
+  }
+}
+
+
+.reveal-bar {
+  animation: revealBar 2s ease-in-out forwards;
+}
+.progress-bar {
+  animation: fillProgressBar 1s ease-in-out forwards;
+}
+
+.progress-bar-slider {
+  animation: fillSlider 1s ease-in-out forwards;
+}
+
+
+.wavy {
+  animation-name: wavy;
+  animation-duration: 1.2s;
+  animation-delay: 0s;
+  animation-timing-function: ease;
+  animation-fill-mode: forwards; /* Keep the final animation state after it ends */
+  position: relative;
+  top: 0;
+  left: 0;
+}
+
+@keyframes wavy {
+  0% {
+    top: 0px;
+  }
+ 
+  100% {
+    top: -75px;
+  }
+}
+
+
+
+.slideIn {
+  animation-name: slideIn;
+  animation-duration: 1.6s;
+  animation-timing-function: ease;
+  animation-delay: 0;
+  animation-fill-mode: forwards; /* Keep the final animation state */
+}
+
+@keyframes slideIn {
+  0% {
+    transform: translateY(100%);
+    opacity: 0;
+  }
+  100% {
+    transform: translateY(0%);
+    opacity: 1;
+  }
+}
+
+@keyframes bounceUp {
+  0% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-20px); /* Adjust the distance of bounce */
+  }
+  100% {
+    transform: translateY(0);
+  }
+}
+
+.bounce-up {
+  animation: bounceUp 0.5s ease;
+  animation-delay: 1.5s;
+}
+
+
+
+@keyframes slideInLeft {
+  0% {
+    transform: translateX(-100%);
+    opacity: 0;
+  }
+  100% {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+.slide-in-left {
+  animation: slideInLeft 0.5s ease forwards;
+}
+
+@keyframes slideInRight {
+  0% {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  100% {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+.slide-in-right {
+  animation: slideInRight 0.5s ease forwards;
+}

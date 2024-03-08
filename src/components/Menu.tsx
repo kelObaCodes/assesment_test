@@ -1,5 +1,9 @@
-import React from "react";
+import React, {useState} from "react";
+import AnimationOnScroll from "../hooks/inView";
 import styled from "styled-components";
+interface ChildComponentProps {
+    isInView?: boolean;
+  }
 
 const MenuContainer = styled.div`
     display: flex;
@@ -58,22 +62,32 @@ const SignUpButton = styled.button`
     cursor: pointer;
 `;
 
-const Menu: React.FC = () => {
+const Menu: React.FC<ChildComponentProps> = ({ isInView }) => {
+    const [isInViewOfmenu, setIsInViewOfmenu] = useState<boolean>(false);
+
     return (
+        <AnimationOnScroll setIsInView={setIsInViewOfmenu}>
         <MenuContainer>
-            <Logo>
+            <Logo
+                className={isInViewOfmenu ? 'slideIn' : ''}
+            >
                 <span className="material-symbols-outlined">link</span>
                 <p> monie point</p>
             </Logo>
-            <MenuItems>
+            <MenuItems
+              className={isInViewOfmenu ? 'slideIn' : ''}
+            >
                 <MenuItem>Dashboard</MenuItem>
                 <MenuItem>Reports</MenuItem>
                 <MenuItem>Documents</MenuItem>
                 <MenuItem>History</MenuItem>
                 <MenuItem>Settings</MenuItem>
             </MenuItems>
-            <SignUpButton>Sign Up</SignUpButton>
+            <SignUpButton
+                className={isInViewOfmenu ? 'slideIn' : ''}
+            >Sign Up</SignUpButton>
         </MenuContainer>
+        </AnimationOnScroll>
     );
 };
 

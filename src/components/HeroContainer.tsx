@@ -1,9 +1,13 @@
-import React from "react";
+import React, {useState} from "react";
+import AnimationOnScroll from "../hooks/inView";
 import styled from "styled-components";
 import Image from "next/image";
 import Laptop from "../../public/images/laptop.png";
 
 import Circle from "./Circle";
+interface ChildComponentProps {
+    isInView?: boolean;
+  }
 
 interface VerticalDivProps {
     left?: string;
@@ -42,8 +46,11 @@ const GreySpan = styled.span`
   margin: 0 10px;
 `;
 
-const Hero: React.FC = () => {
+const Hero: React.FC<ChildComponentProps> = () => {
+    const [isInViewOfHero, setIsInViewOfhero] = useState<boolean>(false);
+
     return (
+        <AnimationOnScroll setIsInView={setIsInViewOfhero}>
         <Container>
             <VerticalDiv left="30%">
                 <Circle
@@ -56,6 +63,7 @@ const Hero: React.FC = () => {
                     left="-152px"
                     top="5px"
                     iconcolor={"#FE4A22"}
+                    className={isInViewOfHero ? 'expandable' : ''}
                 />
                 <Circle
                     icon={
@@ -69,11 +77,14 @@ const Hero: React.FC = () => {
                     left="-102px"
                     top="5px"
                     iconcolor={"#fff"}
+                    className={isInViewOfHero ? 'expandable' : ''}
                 />
                 <Paragraph>Analytics</Paragraph>
 
                 <ImageContainer>
-                    <Image src={Laptop} alt="Laptop" width={250} />
+                    <Image src={Laptop} alt="Laptop" width={250}
+                    className={isInViewOfHero ? 'expandable' : ''}
+                    />
                     <Circle
                         icon={
                             <span className="material-symbols-outlined">
@@ -86,6 +97,7 @@ const Hero: React.FC = () => {
                         right="600px"
                         top="-124px"
                         iconcolor={"#fff"}
+                        className={isInViewOfHero ? 'expandable' : ''}
                     />
                 </ImageContainer>
             </VerticalDiv>
@@ -111,11 +123,13 @@ const Hero: React.FC = () => {
                         left="240px"
                         top="30px"
                         iconcolor={"#222"}
+                        className={isInViewOfHero ? 'expandable' : ''}
                     />
                     {'        '}
                     </span>
             </VerticalDiv>
         </Container>
+        </AnimationOnScroll>
     );
 };
 
