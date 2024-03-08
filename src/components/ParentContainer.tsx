@@ -6,6 +6,7 @@ import Menu from "./Menu";
 import Hero from "./HeroContainer"
 import Analytics from './Analytics'
 import Footer from './Footer'
+import Data from './Data'
 
 
 const Container = styled.div`
@@ -24,6 +25,7 @@ const ParentContainer: React.FC = () => {
 <Menu/>
 <Hero/>
 <Analytics/>
+<Data/>
 <Footer/>
     </Container>;
     
