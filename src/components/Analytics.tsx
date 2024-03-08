@@ -8,8 +8,8 @@ import Stat from "../../public/images/stat.png";
 import Circle from "./Circle";
 import Counter from '../hooks/countAnimation';
 // Main container for the two-column layout
-import AnimationOnScroll from "../hooks/inView";
 
+import { useInView } from 'react-intersection-observer';
 
 const Container = styled.div`
     display: flex;
@@ -269,6 +269,8 @@ const Analytics: React.FC= () => {
 
     const [count, setCount] = useState(1);
 
+    const { ref: text, inView: isText } = useInView()
+    const { ref: percent, inView: isPercent } = useInView()
 
     useEffect(() => {
         const interval = setInterval(() => {
@@ -280,9 +282,11 @@ const Analytics: React.FC= () => {
         return () => clearInterval(interval);
       }, [count]);
     return (
-        <AnimationOnScroll setIsInView={setIsInOfAnalytics}>
-        <Container>
-            <StartRow>
+        <Container
+        
+        >
+            <StartRow
+            >
                 <StyledColumn width="65%">
                     <h3>Your Key to strategic success through analytics</h3>
                 </StyledColumn>
@@ -324,7 +328,7 @@ const Analytics: React.FC= () => {
                                 <h3>Total Profit</h3>
                                 <h2>$264.2K</h2>
                             </TotalProfit>
-                            <VisitorsColumn>
+                            <VisitorsColumn ref={text}>
                                 <div>
                                     <h3>Visitors</h3>
                                 </div>
@@ -332,7 +336,7 @@ const Analytics: React.FC= () => {
                                     <Image src={Angle2} alt="user" width={40} />
                                     <h1>
                                         {
-                                    isInViewOfAnalytics &&
+                                    isPercent &&
                                     <Counter count={56} />}
                                    K</h1>
                                 </div>
@@ -347,7 +351,7 @@ const Analytics: React.FC= () => {
                                 <p>Rate</p>
                                 <h2>+
                                     {
-                                         isInViewOfAnalytics &&
+                                         isPercent &&
                                          <Counter count={58} />
                                     }
                                        %</h2>
@@ -355,22 +359,22 @@ const Analytics: React.FC= () => {
                         </GraphqColumn>
                     </SecondSubColumn>
                 </ColumnA>
-                <ColumnB>
+                <ColumnB ref={percent}>
                     <SubColumnCover>
                         <SubColumn 
-                          className={isInViewOfAnalytics ? "slide-in-left " : ""}
+                          className={isPercent ? "slide-in-left " : ""}
                         >
                             <Image src={User} alt="user" width={60} />
                         </SubColumn>
                         <StyledSubColumn
-                          className={isInViewOfAnalytics ? "slide-in-right " : ""}
+                          className={isPercent ? "slide-in-right " : ""}
                         
                         >
                             <h3>Transactions</h3>
                             <Image src={Angle} alt="user" width={50} />
                             <h1 className="">
                                 {
-                                    isInViewOfAnalytics &&
+                                    isPercent &&
                                     <Counter count={43} />
                                 }
                                 K</h1>
@@ -396,7 +400,7 @@ const Analytics: React.FC= () => {
                         <span style={{ fontSize: "65px" }}>45%</span>
                     </StyledCenteredColumn>
                     <StyledCenteredColumn
-                    className={isInViewOfAnalytics ? "slideIn " : ""}
+                    className={isPercent ? "slideIn " : ""}
                     >
                         <span style={{ fontSize: "13px" }}>
                             Increase your analytics efficiency by upto 45%.
@@ -408,7 +412,6 @@ const Analytics: React.FC= () => {
                 </Row>
             </CenteredRow>
         </Container>
-        </AnimationOnScroll>
     );
 };
 

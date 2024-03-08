@@ -8,7 +8,6 @@ import Menu from "../../public/images/menu.png";
 import background from "../../public/images/background.png";
 import AnimationOnScroll from "../hooks/inView";
 import { useInView } from 'react-intersection-observer';
-import Wavy from "@/hooks/wavyAnimation";
 interface ChildComponentProps {
     isInView?: boolean;
 }
@@ -79,7 +78,6 @@ const Button = styled.button`
     width: 230px;
     border: 1px solid #f2f2f2;
     height: 57px;
-
     box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px,
         rgba(0, 0, 0, 0.3) 0px 30px 60px -30px;
 `;
@@ -128,16 +126,16 @@ const BigReveal = styled.div`
     animation-delay: 1s;
 `;
 
-const Actions: React.FC<ChildComponentProps> = () => {
+const Actions: React.FC= () => {
     const [isInViewOfActions, setIsInViewfActions] = useState<boolean>(false);
     const { ref: actionRef, inView: isAction } = useInView()
+    const { ref: bigTextRef, inView: isBigText } = useInView()
     
     return (
-        <AnimationOnScroll setIsInView={setIsInViewfActions}>
             <Container>
                 <Section>
                     <Column>
-                        <Title className={isInViewOfActions ? "slideIn " : ""}>
+                        <Title className={isAction ? "slideIn " : ""}>
                             Turning data into real actions and ideas.
                         </Title>
                         <ButtonContainer >
@@ -163,7 +161,7 @@ const Actions: React.FC<ChildComponentProps> = () => {
                                 </PlusIcon>
                             </Button>
                             <Button
-                                className={isInViewOfActions ? "slideIn " : ""}
+                                className={isAction ? "slideIn " : ""}
                             >
                                 <ButtonText>Easy integration</ButtonText>
                                 <PlusIcon>
@@ -178,14 +176,14 @@ const Actions: React.FC<ChildComponentProps> = () => {
                         <Image
                             src={Deskptop}
                             alt="Bar code"
-                            className={isInViewOfActions ? "slideIn " : ""}
+                            className={isAction ? "slideIn " : ""}
                             width={590}
                         />
                         <Image
                             src={Mobile}
                             alt="Bar code"
                             className={`${
-                                isInViewOfActions ? "slideIn" : ""
+                                isAction ? "slideIn" : ""
                             }  mobile-device`}
                             width={190}
                         />
@@ -193,23 +191,22 @@ const Actions: React.FC<ChildComponentProps> = () => {
                             src={Menu}
                             alt="Bar code"
                             className={`${
-                                isInViewOfActions ? "slideIn" : ""
+                                isAction ? "slideIn" : ""
                             }  menu`}
                             width={180}
                         />
                     </Column>
                 </Section>
-                <SecondSection>
+                <SecondSection ref={bigTextRef}>
                     <BigReveal
                    className={`${
-                    isInViewOfActions ? "reveal-bar" : ""
+                    isBigText ? "reveal-bar" : ""
                 }`}
                     />
                     <BigText>Moniepoint</BigText>
                 
                 </SecondSection>
             </Container>
-        </AnimationOnScroll>
     );
 };
 

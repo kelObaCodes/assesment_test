@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from "react";
+import React from "react";
 import styled from "styled-components";
 import Image from "next/image";
 import Graph from "../../public/images/graph.png";
@@ -385,13 +385,7 @@ const Data: React.FC = () => {
                         }
                     </Paragraph>
                     </FullWidthText>
-{/* 
-                <FullWidthText>
-                    <Paragraph>We give you full</Paragraph>
-                    <Paragraph>
-                        <GreySpan>control</GreySpan> over your data
-                    </Paragraph>
-                </FullWidthText> */}
+
                 <FirstSectionRow
                    ref={conversation}
                 >

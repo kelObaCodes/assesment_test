@@ -142,8 +142,6 @@ const Paragraph = styled.p`
 `;
 
 const Efficiency: React.FC = () => {
-    const [isInViewOfEfficiency, setIsInViewEfficiency] =
-        useState<boolean>(false);
 
     const { ref: wavyRef, inView: isWavy } = useInView();
     const { ref: conversation, inView: isConversation } = useInView();

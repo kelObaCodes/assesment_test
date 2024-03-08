@@ -1,9 +1,7 @@
-import React, {useState} from "react";
-import AnimationOnScroll from "../hooks/inView";
+import React from "react";
+
 import styled from "styled-components";
-interface ChildComponentProps {
-    isInView?: boolean;
-  }
+import { useInView } from "react-intersection-observer";
 
 const MenuContainer = styled.div`
     display: flex;
@@ -62,20 +60,18 @@ const SignUpButton = styled.button`
     cursor: pointer;
 `;
 
-const Menu: React.FC<ChildComponentProps> = ({ isInView }) => {
-    const [isInViewOfmenu, setIsInViewOfmenu] = useState<boolean>(false);
-
+const Menu: React.FC= () => {
+    const { ref: menuRef, inView: isMenu } = useInView();
     return (
-        <AnimationOnScroll setIsInView={setIsInViewOfmenu}>
-        <MenuContainer>
+        <MenuContainer ref={menuRef}>
             <Logo
-                className={isInViewOfmenu ? 'slideIn' : ''}
+                className={isMenu ? 'slideIn' : ''}
             >
                 <span className="material-symbols-outlined">link</span>
                 <p> monie point</p>
             </Logo>
             <MenuItems
-              className={isInViewOfmenu ? 'slideIn' : ''}
+              className={isMenu ? 'slideIn' : ''}
             >
                 <MenuItem>Dashboard</MenuItem>
                 <MenuItem>Reports</MenuItem>
@@ -84,10 +80,9 @@ const Menu: React.FC<ChildComponentProps> = ({ isInView }) => {
                 <MenuItem>Settings</MenuItem>
             </MenuItems>
             <SignUpButton
-                className={isInViewOfmenu ? 'slideIn' : ''}
+                className={isMenu ? 'slideIn' : ''}
             >Sign Up</SignUpButton>
         </MenuContainer>
-        </AnimationOnScroll>
     );
 };
 
