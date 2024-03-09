@@ -6,11 +6,7 @@ import Deskptop from "../../public/images/desktop.png";
 import Mobile from "../../public/images/mobile.png";
 import Menu from "../../public/images/menu.png";
 import background from "../../public/images/background.png";
-import AnimationOnScroll from "../hooks/inView";
 import { useInView } from 'react-intersection-observer';
-interface ChildComponentProps {
-    isInView?: boolean;
-}
 
 const Container = styled.div`
     display: flex;
@@ -127,7 +123,6 @@ const BigReveal = styled.div`
 `;
 
 const Actions: React.FC= () => {
-    const [isInViewOfActions, setIsInViewfActions] = useState<boolean>(false);
     const { ref: actionRef, inView: isAction } = useInView()
     const { ref: bigTextRef, inView: isBigText } = useInView()
     
