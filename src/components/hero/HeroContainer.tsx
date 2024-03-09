@@ -1,58 +1,25 @@
-import React, {useState} from "react";
+import React from "react";
 import styled from "styled-components";
 import Image from "next/image";
-import Laptop from "../../public/images/laptop_.png";
+import Laptop from "../../../public/images/laptop_.png";
 import Wavy from "@/hooks/wavyAnimation";
 
 import { useInView } from 'react-intersection-observer';
-import Circle from "./Circle";
-
-interface VerticalDivProps {
-    left?: string;
-}
-
-const Container = styled.div`
-    display: flex;
-    flex-direction: column;
-    margin-top: 100px;
-    margin-bottom: 40px;
-`;
-
-const VerticalDiv = styled.div<VerticalDivProps>`
-    margin-bottom: 1px;
-    position: relative;
-    ${(props) => (props.left ? `left: ${props.left};` : "")}
-`;
+import Circle from "../Circle";
 
 
-const ImageContainer = styled.div`
-    position: relative;
-    > img {
-        position: absolute;
-        left: 350px;
-        bottom: -53px;
-    }
-`;
-const SpanSeparator = styled.span`
-  margin: 0 50px;
-`;
-const GreySpan = styled.span`
-  color: #CCCCCC;
-  margin: 0 10px;
-`;
 
-const FullWidthText = styled.div`
-    font-size: 35px;
-    width: 100%;
-    overflow: hidden;
-    height: 86px;
-`;
-const Paragraph = styled.p`
-    margin: 0;
-    font-size: 86px;
-    position: relative;
-    bottom: -54px;
-`;
+import {
+    Container,
+    VerticalDiv,
+    FullWidthText,
+    ImageContainer,
+    SpanSeparator,
+    Paragraph 
+
+} from "./styles";
+
+
 const Hero: React.FC = () => {
     const { ref: text, inView: isText } = useInView()
 
@@ -61,7 +28,9 @@ const Hero: React.FC = () => {
             <VerticalDiv left="30%">
                 <Circle
                     icon={
-                        <span className="material-symbols-outlined">bolt</span>
+                        <span 
+                        className={`material-symbols-outlined ${isText ? 'rotate-animation ': ''}`}
+                       >bolt</span>
                     }
                     color="#F2F2F2"
                     height="70px"
@@ -73,7 +42,10 @@ const Hero: React.FC = () => {
                 />
                 <Circle
                     icon={
-                        <span className="material-symbols-outlined">
+                        <span 
+                        
+                        className={`material-symbols-outlined ${isText ? 'rotate-animation ': ''}`}
+                        >
                             timeline
                         </span>
                     }
@@ -109,7 +81,7 @@ const Hero: React.FC = () => {
                         color="#FE4A22"
                         height="40px"
                         width="40px"
-                        right="648px"
+                        right="634px"
                         top="-127px"
                         
                         iconcolor={"#fff"}
@@ -157,7 +129,10 @@ const Hero: React.FC = () => {
                     <span>
                     <Circle
                         icon={
-                            <span className="material-symbols-outlined">
+                            <span 
+                            
+                            className={`material-symbols-outlined ${isText ? 'expandable ': ''}`}
+                       >
                             signal_cellular_alt
                             </span>
                         }
@@ -167,7 +142,7 @@ const Hero: React.FC = () => {
                         left="247px"
                         top="7px"
                         iconcolor={"#222"}
-                        className={isText ? 'expandable' : ''}
+                        className={isText ? 'expandable' : 'no-opacity'}
                     />
                     {'        '}
                     </span>
