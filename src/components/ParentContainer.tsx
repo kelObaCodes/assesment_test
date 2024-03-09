@@ -2,15 +2,15 @@
 
 import React from "react";
 import styled from "styled-components";
-import Menu from "./Menu";
-import Hero from "./HeroContainer";
-import Analytics from "./Analytics";
-import Footer from "./Footer";
-import Data from "./Data";
-import Efficiency from "./Efficiency";
-import Actions from "./Actions";
+import Menu from "./menu/Menu";
+import Hero from "./hero/HeroContainer";
+import Analytics from "./analytics/Analytics";
+import Footer from "./footer/Footer";
+import Data from "./data/Data";
+import Efficiency from "./efficiency/Efficiency";
+import Actions from "./actions/Actions";
 
-const Container = styled.div`
+const Container = styled.main`
     background-color: #fff;
     margin: 0 auto;
     overflow: hidden;
